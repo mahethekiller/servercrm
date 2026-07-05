@@ -4,7 +4,7 @@ require_once __DIR__ . '/includes/class.db.php';
 $db = new DB();
 require_once __DIR__ . '/includes/functions.php';
 
-define('BASE_URL', 'http://localhost/crm/');
+define('BASE_URL', 'http://localhost/devcodi/');
 define('APP_NAME', 'Customer Relationship Management (CRM)');
 define('ROOT_PATH', __DIR__ . '/');
 

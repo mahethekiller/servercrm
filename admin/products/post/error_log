@@ -1,0 +1,66 @@
+[13-Jun-2025 04:23:31 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: 'Ram' for column 'attribute_type' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO att...')
+#1 /home/devcodetechi/public_html/admin/products/post/post.php(185): DB->insert('attributes', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[13-Jun-2025 04:23:39 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: 'Ram' for column 'attribute_type' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO att...')
+#1 /home/devcodetechi/public_html/admin/products/post/post.php(185): DB->insert('attributes', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[13-Jun-2025 04:24:02 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: 'HDD' for column 'attribute_type' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO att...')
+#1 /home/devcodetechi/public_html/admin/products/post/post.php(185): DB->insert('attributes', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[13-Jun-2025 04:24:16 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: 'Ram' for column 'attribute_type' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:398
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(398): mysqli_query(Object(mysqli), 'UPDATE attribut...')
+#1 /home/devcodetechi/public_html/admin/products/post/post.php(215): DB->update('attributes', Array, Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 398
+[13-Jun-2025 04:24:17 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: 'Ram' for column 'attribute_type' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:398
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(398): mysqli_query(Object(mysqli), 'UPDATE attribut...')
+#1 /home/devcodetechi/public_html/admin/products/post/post.php(215): DB->update('attributes', Array, Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 398
+[13-Jun-2025 04:24:18 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: 'Ram' for column 'attribute_type' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:398
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(398): mysqli_query(Object(mysqli), 'UPDATE attribut...')
+#1 /home/devcodetechi/public_html/admin/products/post/post.php(215): DB->update('attributes', Array, Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 398
+[13-Jun-2025 04:24:18 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: 'Ram' for column 'attribute_type' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:398
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(398): mysqli_query(Object(mysqli), 'UPDATE attribut...')
+#1 /home/devcodetechi/public_html/admin/products/post/post.php(215): DB->update('attributes', Array, Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 398
+[13-Jun-2025 04:24:18 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: 'Ram' for column 'attribute_type' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:398
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(398): mysqli_query(Object(mysqli), 'UPDATE attribut...')
+#1 /home/devcodetechi/public_html/admin/products/post/post.php(215): DB->update('attributes', Array, Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 398
+[13-Jun-2025 04:24:18 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: 'Ram' for column 'attribute_type' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:398
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(398): mysqli_query(Object(mysqli), 'UPDATE attribut...')
+#1 /home/devcodetechi/public_html/admin/products/post/post.php(215): DB->update('attributes', Array, Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 398
+[13-Jun-2025 04:24:18 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: 'Ram' for column 'attribute_type' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:398
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(398): mysqli_query(Object(mysqli), 'UPDATE attribut...')
+#1 /home/devcodetechi/public_html/admin/products/post/post.php(215): DB->update('attributes', Array, Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 398
+[13-Jun-2025 04:24:18 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: 'Ram' for column 'attribute_type' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:398
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(398): mysqli_query(Object(mysqli), 'UPDATE attribut...')
+#1 /home/devcodetechi/public_html/admin/products/post/post.php(215): DB->update('attributes', Array, Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 398

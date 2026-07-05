@@ -1,0 +1,24 @@
+[12-Jul-2025 10:09:25 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect decimal value: '' for column 'otc' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:316
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(316): mysqli_query(Object(mysqli), 'INSERT INTO quo...')
+#1 /home/devcodetechi/public_html/admin/crmleads/post/createquote_post.php(72): DB->insert('quotations', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 316
+[12-Jul-2025 10:09:28 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect decimal value: '' for column 'otc' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:316
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(316): mysqli_query(Object(mysqli), 'INSERT INTO quo...')
+#1 /home/devcodetechi/public_html/admin/crmleads/post/createquote_post.php(72): DB->insert('quotations', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 316
+[12-Jul-2025 10:09:31 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect decimal value: '' for column 'otc' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:316
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(316): mysqli_query(Object(mysqli), 'INSERT INTO quo...')
+#1 /home/devcodetechi/public_html/admin/crmleads/post/createquote_post.php(72): DB->insert('quotations', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 316
+[12-Jul-2025 10:09:31 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect decimal value: '' for column 'otc' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:316
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(316): mysqli_query(Object(mysqli), 'INSERT INTO quo...')
+#1 /home/devcodetechi/public_html/admin/crmleads/post/createquote_post.php(72): DB->insert('quotations', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 316

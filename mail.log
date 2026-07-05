@@ -1,0 +1,66 @@
+[2026-07-04 21:56:57] To: sales@e2ccloud.com | Subject: Compute Details Submitted for Test Company
+Body:
+Compute details have been submitted:
+
+Company: Test Company
+Node Name: test
+Private IP: www
+Public IP: sdsds
+Server Name: dsdsds
+
+----------------------------------------
+[2026-07-04 21:56:59] To: subject@e2ccloud.com | Subject: Compute Details Submitted for Test Company
+Body:
+Compute details have been submitted:
+
+Company: Test Company
+Node Name: test
+Private IP: www
+Public IP: sdsds
+Server Name: dsdsds
+
+----------------------------------------
+[2026-07-04 22:01:58] To: support@e2ccloud.com | Subject: New Upgrade Quotation Created for Test Company
+Body:
+A new quotation has been created.
+
+Quotation ID: 26
+Company: Test Company
+Status: Upgrade
+Created By: Kundan (kundan@gmail.com)
+Sub Total: 110.00
+
+----------------------------------------
+[2026-07-04 22:02:00] To: subject@e2ccloud.com | Subject: New Upgrade Quotation Created for Test Company
+Body:
+A new quotation has been created.
+
+Quotation ID: 26
+Company: Test Company
+Status: Upgrade
+Created By: Kundan (kundan@gmail.com)
+Sub Total: 110.00
+
+----------------------------------------
+[2026-07-04 22:02:02] To: kundan@gmail.com | Subject: New Upgrade Quotation Created for Test Company
+Body:
+A new quotation has been created.
+
+Quotation ID: 26
+Company: Test Company
+Status: Upgrade
+Created By: Kundan (kundan@gmail.com)
+Sub Total: 110.00
+
+----------------------------------------
+[2026-07-04 22:02:04] To: accounts@e2ccloud.com | Subject: New Upgrade Quotation Created for Test Company
+Body:
+A new quotation has been created.
+
+Quotation ID: 26
+Company: Test Company
+Status: Upgrade
+Created By: Kundan (kundan@gmail.com)
+Sub Total: 110.00
+
+----------------------------------------

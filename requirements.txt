@@ -1,0 +1,42 @@
+# CRM Requirements Analysis
+
+1. Company Module Modifications
+   - IT Contact: Add field for IT Contact Name in companies table.
+   - Finance Contact: Add field for Finance Contact Name in companies table.
+   - Lead Value: Add field for monthly Lead Value in INR in companies table.
+
+2. Quotation Upgrades & Status Workflow
+   - Add "Upgrade" option/status to Quotations (Demo, Live, Upgrade).
+   - Convert "Live" quotation into an "Upgrade" quotation.
+   - Display upgrade quotations in a dedicated Upgrade section.
+
+3. Demo vs. Live Quotation Workflows
+   - Demo Status:
+     - Remove/hide billing information (CIN, GST, PAN).
+     - Add fields for Demo Start Date and Demo End Date to quotations.
+     - Send email notification upon submission to:
+       1. support@e2ccloud.com
+       2. subject@e2ccloud.com
+       3. Requesting Person (Salesperson/User).
+   - Live Status:
+     - Send email notification upon submission to:
+       1. support@e2ccloud.com
+       2. subject@e2ccloud.com
+       3. Requesting Person
+       4. accounts@e2ccloud.com
+
+4. Additional Services in Quotation Creation
+   - Colocation: Add Data Center, Server Details, Rack U (options 1, 2, 3...), Sales Price, Total.
+   - Email Services: Add Provider (O365, Gsuite), Pricing Model, Users, Sales Price, Tax.
+   - Backup Services: Add Storage Type (Acronis, Local), Unit Size (GB/TB), Unit Price.
+   - Add-on Fields: Antivirus, VPN, SSL, Others.
+
+5. Compute Details Section
+   - Add Node Name, Private IP, Public IP, and Server Name.
+   - When submitted, notify Sales, Subject, and Accounts (for Live and Upgrade quotes).
+
+6. Document Section & File Upload
+   - Add a Document Section to the Company view for Live companies.
+   - Display uploaded files per company along with Contact Name.
+   - Implement file upload functionality.
+   - On successful upload, notify the assigned Salesperson and Partner.

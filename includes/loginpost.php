@@ -16,6 +16,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             'username' => $user['username'],
             'name'     => $user['name'],
             'role'     => $user['role'],
+            'email'    => $user['email']
         ];
 
         echo "true";

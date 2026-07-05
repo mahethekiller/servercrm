@@ -7,6 +7,154 @@ if (isset($_GET['operation']) && $_GET['operation'] === 'add_product') {
     if (isset($_GET['product_id'])) {
         $productId = intval($_GET['product_id']);  // sanitize product id
 
+        if ($productId === 3) {
+            // Colocation
+            $tableHtml = '
+<table class="table table-condensed table-bordered">
+    <thead>
+        <tr>
+            <th>Commercial Details</th>
+            <th>Reg Price</th>
+            <th>Select Unit</th>
+            <th>Sale Price</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <strong>Colocation Service</strong>
+                <div class="mt-2 text-left align-left">
+                    <label class="small text-muted mb-0">Data Center</label>
+                    <input type="text" class="form-control coloc-dc mb-1" placeholder="Data Center Location" style="text-align: left;">
+                    <label class="small text-muted mb-0">Server Details</label>
+                    <textarea class="form-control coloc-details" rows="2" placeholder="Server Details" style="text-align: left;"></textarea>
+                </div>
+                <input type="hidden" name="products[3][1][attribute_id]" value="1">
+                <input type="hidden" class="custom-details-json" name="products[3][1][custom_details]" value="{}">
+            </td>
+            <td><input type="text" class="form-control reg-price" name="products[3][1][reg_price]" value="0"></td>
+            <td>
+                <label class="small text-muted mb-0">Rack U</label>
+                <select class="form-control unit-select" name="products[3][1][unit]">
+                    <option value="1">1U</option>
+                    <option value="2">2U</option>
+                    <option value="3">3U</option>
+                    <option value="4">4U</option>
+                </select>
+            </td>
+            <td><input type="text" class="form-control sale-price" name="products[3][1][sale_price]" value="0"></td>
+            <td><input type="text" class="form-control total-price" name="products[3][1][total]" value="0" readonly></td>
+            <td><button class="btn btn-xs btn-primary recalc-btn" type="button">Re-Calculate</button></td>
+        </tr>
+    </tbody>
+</table>
+<span><button class="btn btn-danger remove-item" data-id="3">Remove</button></span>';
+            echo json_encode(['success' => true, 'data' => $tableHtml]);
+            exit;
+        }
+
+        if ($productId === 4) {
+            // Email Service
+            $tableHtml = '
+<table class="table table-condensed table-bordered">
+    <thead>
+        <tr>
+            <th>Commercial Details</th>
+            <th>Reg Price</th>
+            <th>Select Unit</th>
+            <th>Sale Price</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <strong>Email Service</strong>
+                <div class="mt-2 text-left align-left">
+                    <label class="small text-muted mb-0">Provider</label>
+                    <select class="form-control email-provider mb-1" style="text-align: left;">
+                        <option value="O365">Office 365</option>
+                        <option value="GSuite">Google Workspace</option>
+                    </select>
+                    <label class="small text-muted mb-0">Pricing Model</label>
+                    <select class="form-control email-model mb-1" style="text-align: left;">
+                        <option value="per_price">Per Price</option>
+                        <option value="select_unit">Select Unit</option>
+                    </select>
+                    <label class="small text-muted mb-0">Tax</label>
+                    <input type="text" class="form-control email-tax" placeholder="Tax (e.g. 18%)" value="0" style="text-align: left;">
+                </div>
+                <input type="hidden" name="products[4][1][attribute_id]" value="1">
+                <input type="hidden" class="custom-details-json" name="products[4][1][custom_details]" value="{}">
+            </td>
+            <td><input type="text" class="form-control reg-price" name="products[4][1][reg_price]" value="0"></td>
+            <td>
+                <label class="small text-muted mb-0">Users</label>
+                <input type="number" class="form-control unit-select" name="products[4][1][unit]" value="1">
+            </td>
+            <td><input type="text" class="form-control sale-price" name="products[4][1][sale_price]" value="0"></td>
+            <td><input type="text" class="form-control total-price" name="products[4][1][total]" value="0" readonly></td>
+            <td><button class="btn btn-xs btn-primary recalc-btn" type="button">Re-Calculate</button></td>
+        </tr>
+    </tbody>
+</table>
+<span><button class="btn btn-danger remove-item" data-id="4">Remove</button></span>';
+            echo json_encode(['success' => true, 'data' => $tableHtml]);
+            exit;
+        }
+
+        if ($productId === 5) {
+            // Backup Service
+            $tableHtml = '
+<table class="table table-condensed table-bordered">
+    <thead>
+        <tr>
+            <th>Commercial Details</th>
+            <th>Reg Price</th>
+            <th>Select Unit</th>
+            <th>Sale Price</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <strong>Backup Service</strong>
+                <div class="mt-2 text-left align-left">
+                    <label class="small text-muted mb-0">Storage Type</label>
+                    <select class="form-control backup-type mb-1" style="text-align: left;">
+                        <option value="Acronis">Acronis</option>
+                        <option value="Local">Local</option>
+                    </select>
+                    <label class="small text-muted mb-0">Unit Type</label>
+                    <select class="form-control backup-unit-type" style="text-align: left;">
+                        <option value="GB">GB</option>
+                        <option value="TB">TB</option>
+                    </select>
+                </div>
+                <input type="hidden" name="products[5][1][attribute_id]" value="1">
+                <input type="hidden" class="custom-details-json" name="products[5][1][custom_details]" value="{}">
+            </td>
+            <td><input type="text" class="form-control reg-price" name="products[5][1][reg_price]" value="0"></td>
+            <td>
+                <label class="small text-muted mb-0">Storage Size</label>
+                <input type="number" class="form-control unit-select" name="products[5][1][unit]" value="1">
+            </td>
+            <td><input type="text" class="form-control sale-price" name="products[5][1][sale_price]" value="0"></td>
+            <td><input type="text" class="form-control total-price" name="products[5][1][total]" value="0" readonly></td>
+            <td><button class="btn btn-xs btn-primary recalc-btn" type="button">Re-Calculate</button></td>
+        </tr>
+    </tbody>
+</table>
+<span><button class="btn btn-danger remove-item" data-id="5">Remove</button></span>';
+            echo json_encode(['success' => true, 'data' => $tableHtml]);
+            exit;
+        }
+
         $tableHtml = '
 <table class="table table-condensed table-bordered">
     <thead>

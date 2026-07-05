@@ -39,7 +39,7 @@
 <body class="login-page bg-body-secondary">
     <div class="login-box">
         <div class="login-logo">
-            <a href="#"><b>I</b>MEGH</a>
+            <a href="#"><b>2C</b>cloud</a>
         </div>
         <!-- /.login-logo -->
         <div class="card">

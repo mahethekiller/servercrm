@@ -1,0 +1,180 @@
+[07-Jun-2025 08:43:19 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:291
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(291): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(46): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 291
+[07-Jun-2025 08:43:22 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:291
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(291): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(46): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 291
+[07-Jun-2025 08:43:27 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:291
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(291): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(46): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 291
+[07-Jun-2025 08:43:31 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:291
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(291): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(46): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 291
+[07-Jun-2025 08:43:31 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:291
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(291): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(46): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 291
+[07-Jun-2025 08:43:32 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:291
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(291): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(46): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 291
+[07-Jun-2025 08:43:32 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:291
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(291): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(46): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 291
+[07-Jun-2025 08:44:10 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:291
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(291): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(46): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 291
+[07-Jun-2025 08:44:13 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:291
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(291): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(46): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 291
+[07-Jun-2025 08:44:13 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:291
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(291): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(46): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 291
+[07-Jun-2025 08:44:13 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:291
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(291): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(46): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 291
+[07-Jun-2025 08:44:14 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:291
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(291): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(46): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 291
+[07-Jun-2025 08:44:14 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:291
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(291): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(46): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 291
+[07-Jun-2025 08:44:14 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:291
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(291): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(46): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 291
+[12-Jun-2025 16:57:37 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[12-Jun-2025 16:57:39 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[12-Jun-2025 16:57:41 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[12-Jun-2025 16:57:41 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[12-Jun-2025 16:57:42 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[12-Jun-2025 16:57:42 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[12-Jun-2025 16:57:51 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[12-Jun-2025 16:57:53 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[12-Jun-2025 16:57:53 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[12-Jun-2025 16:57:53 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[12-Jun-2025 16:57:54 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[13-Jun-2025 04:20:39 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[13-Jun-2025 04:20:41 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[13-Jun-2025 04:20:51 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:319
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(319): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 319
+[14-Jun-2025 07:38:53 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:316
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(316): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 316
+[14-Jun-2025 07:38:57 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Incorrect integer value: '' for column 'id' at row 1 in /home/devcodetechi/public_html/includes/class.db.php:316
+Stack trace:
+#0 /home/devcodetechi/public_html/includes/class.db.php(316): mysqli_query(Object(mysqli), 'INSERT INTO use...')
+#1 /home/devcodetechi/public_html/admin/users/post/user_crud.php(44): DB->insert('users', Array)
+#2 {main}
+  thrown in /home/devcodetechi/public_html/includes/class.db.php on line 316

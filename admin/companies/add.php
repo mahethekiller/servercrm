@@ -1,5 +1,5 @@
 <?php
-    $pageTitle = 'Companies';
+    $pageTitle = 'Add Company';
     include '../../includes/header.php';
 
 ?>
@@ -11,7 +11,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">All <?php echo $pageTitle ?></h3>
+                <h3 class="card-title"> <?php echo $pageTitle ?></h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse" title="Collapse">
                         <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
@@ -42,9 +42,10 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="email">Email <span style="color:red">*</span></label>
+                                <label for="email">Email <span style="color:red">*</span> <span id="email_error" class="text-danger"></span></label>
                                 <input type="email" class="form-control" id="email" name="email"
                                     placeholder="Email Address" required>
+                                
                             </div>
                         </div>
                         <div class="col-3">
@@ -127,6 +128,63 @@
                                 <label for="website">Website</label>
                                 <input type="url" class="form-control" id="website" name="website"
                                     placeholder="Company Website">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="lead_value">Monthly Lead Value (INR)</label>
+                                <input type="number" step="0.01" class="form-control" id="lead_value" name="lead_value"
+                                    placeholder="0.00">
+                            </div>
+                        </div>
+
+                        <!-- IT Contact Section -->
+                        <div class="col-12 mt-4">
+                            <h5 class="mb-3">IT Contact Details</h5>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="it_contact_name">Contact Name</label>
+                                <input type="text" class="form-control" id="it_contact_name" name="it_contact_name" placeholder="IT Contact Name">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="it_contact_email">Email</label>
+                                <input type="email" class="form-control" id="it_contact_email" name="it_contact_email" placeholder="IT Contact Email">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="it_contact_phone">Phone</label>
+                                <input type="tel" class="form-control" id="it_contact_phone" name="it_contact_phone" placeholder="IT Contact Phone">
+                            </div>
+                        </div>
+
+                        <!-- Finance Contact Section -->
+                        <div class="col-12 mt-4">
+                            <h5 class="mb-3">Finance Contact Details</h5>
+                            <div class="form-check mb-3">
+                                <input type="checkbox" class="form-check-input" id="copyItDetails">
+                                <label class="form-check-label" for="copyItDetails">Same as IT Details</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="finance_contact_name">Contact Name</label>
+                                <input type="text" class="form-control" id="finance_contact_name" name="finance_contact_name" placeholder="Finance Contact Name">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="finance_contact_email">Email</label>
+                                <input type="email" class="form-control" id="finance_contact_email" name="finance_contact_email" placeholder="Finance Contact Email">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="finance_contact_phone">Phone</label>
+                                <input type="tel" class="form-control" id="finance_contact_phone" name="finance_contact_phone" placeholder="Finance Contact Phone">
                             </div>
                         </div>
                     </div>

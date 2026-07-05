@@ -1,19 +1,19 @@
 <?php
 /*------------------------------------------------------------------------------
-** File:		class.db.php
-** Description:	PHP MySQLi wrapper class to handle common database queries and operations
-** Version:		1.0
-** Updated:     18-Feb-2017
-** Author:		mahethekiller
-** Homepage:	www.webclasses.in
-**------------------------------------------------------------------------------*/
+ ** File:		class.db.php
+ ** Description:	PHP MySQLi wrapper class to handle common database queries and operations
+ ** Version:		1.0
+ ** Updated:     18-Feb-2017
+ ** Author:		mahethekiller
+ ** Homepage:	www.webclasses.in
+ **------------------------------------------------------------------------------*/
 
 // Database Details
 
 define('DB_HOST', 'localhost');                  // set database host
 define('DB_USER', 'root');                       // set database user
-define('DB_PASS', '');                           // set database password
-define('DB_NAME', 'crm');                        // set database name
+define('DB_PASS', '254032');                           // set database password
+define('DB_NAME', 'devcodi');                        // set database name
 define('SEND_ERRORS_TO', 'you@yourwebsite.com'); //set email notification email address
 define('DISPLAY_DEBUG', true);                   //display db errors?
 class DB
@@ -36,8 +36,6 @@ class DB
     public function __construct()
     {
         global $connection;
-        mb_internal_encoding('UTF-8');
-        mb_regex_encoding('UTF-8');
         $this->link = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
         if (mysqli_connect_errno()) {
@@ -62,7 +60,7 @@ class DB
      */
     public function filter($data)
     {
-        if (! is_array($data)) {
+        if (!is_array($data)) {
             $data = trim(htmlentities($data));
             $data = mysqli_real_escape_string($this->link, $data);
         } else {
@@ -162,6 +160,33 @@ class DB
     }
 
     /**
+     * Count number of rows found matching a specific query
+     * @param string
+     * @param array
+     * @return int
+     */
+    public function count($table, $where = [])
+    {
+        $sql = "SELECT COUNT(*) FROM " . $table;
+        if (!empty($where)) {
+            $sql .= " WHERE ";
+            foreach ($where as $field => $value) {
+                $value = $value;
+                $clause[] = "$field = '$value'";
+            }
+            $sql .= implode(' AND ', $clause);
+        }
+        $query = $this->link->query($sql);
+        if (mysqli_error($this->link)) {
+            $this->log_db_errors(mysqli_error($this->link), $sql, 'Fatal');
+            return false;
+        } else {
+            return mysqli_fetch_row($query)[0];
+        }
+        mysqli_free_result($query);
+    }
+
+    /**
      * Run check to see if value exists, returns true or false
      *
      * Example Usage:
@@ -187,7 +212,7 @@ class DB
         $check = [];
         foreach ($params as $field => $value) {
 
-            if (! empty($field) && ! empty($value)) {
+            if (!empty($field) && !empty($value)) {
                 //Check for frequently used mysql commands and prevent encapsulation of them
                 if ($this->db_common($value)) {
                     $check[] = "$field = $value";
@@ -200,7 +225,7 @@ class DB
         $check = implode(' AND ', $check);
 
         $rs_check = "SELECT $check_val FROM " . $table . " WHERE $check";
-        $number   = $this->num_rows($rs_check);
+        $number = $this->num_rows($rs_check);
         if ($number === 0) {
             return false;
         } else {
@@ -209,7 +234,8 @@ class DB
         exit;
     }
 
-    public function get_var($query) {
+    public function get_var($query)
+    {
         $result = $this->link->query($query);
         if (mysqli_error($this->link)) {
             $this->log_db_errors(mysqli_error($this->link), $query, 'Fatal');
@@ -250,7 +276,7 @@ class DB
      */
     public function get_results($query)
     {
-        $row   = [];
+        $row = [];
         $query = $this->link->query($query);
         if (mysqli_error($this->link)) {
             $this->log_db_errors(mysqli_error($this->link), $query, 'Fatal');
@@ -276,12 +302,16 @@ class DB
     public function insert($table, $variables = [])
     {
 
-        $sql    = "INSERT INTO " . $table;
+        $sql = "INSERT INTO " . $table;
         $fields = [];
         $values = [];
         foreach ($variables as $field => $value) {
             $fields[] = $field;
-            $values[] = "'" . $value . "'";
+            if ($value === null) {
+                $values[] = "NULL";
+            } else {
+                $values[] = "'" . $value . "'";
+            }
         }
         $fields = ' (' . implode(', ', $fields) . ')';
         $values = '(' . implode(', ', $values) . ')';
@@ -313,7 +343,7 @@ class DB
      */
     public function insert_safe($table, $variables = [])
     {
-        $sql    = "INSERT INTO " . $table;
+        $sql = "INSERT INTO " . $table;
         $fields = [];
         $values = [];
         foreach ($variables as $field => $value) {
@@ -351,8 +381,11 @@ class DB
 
         $sql = "UPDATE " . $table . " SET ";
         foreach ($variables as $field => $value) {
-
-            $updates[] = "`$field` = '$value'";
+            if ($value === null) {
+                $updates[] = "`$field` = NULL";
+            } else {
+                $updates[] = "`$field` = '$value'";
+            }
         }
         $sql .= implode(', ', $updates);
 
@@ -363,7 +396,7 @@ class DB
         }
         $sql .= ' WHERE ' . implode(' AND ', $clause);
 
-        if (! empty($limit)) {
+        if (!empty($limit)) {
             $sql .= ' LIMIT ' . $limit;
         }
 
@@ -391,12 +424,12 @@ class DB
     {
         $sql = "DELETE FROM " . $table;
         foreach ($where as $field => $value) {
-            $value    = $value;
+            $value = $value;
             $clause[] = "$field = '$value'";
         }
         $sql .= " WHERE " . implode(' AND ', $clause);
 
-        if (! empty($limit)) {
+        if (!empty($limit)) {
             $sql .= " LIMIT " . $limit;
         }
 
@@ -462,12 +495,12 @@ class DB
      */
     public function truncate($tables = [])
     {
-        if (! empty($tables)) {
+        if (!empty($tables)) {
             $truncated = 0;
             foreach ($tables as $table) {
                 $truncate = "TRUNCATE TABLE `" . trim($table) . "`";
                 mysqli_query($this->link, $truncate);
-                if (! mysqli_error($this->link)) {
+                if (!mysqli_error($this->link)) {
                     $truncated++;
                 }
             }
@@ -487,7 +520,7 @@ class DB
     public function display($variable, $echo = true)
     {
         $out = '';
-        if (! is_array($variable)) {
+        if (!is_array($variable)) {
             $out .= $variable;
         } else {
             $out .= '<pre>';

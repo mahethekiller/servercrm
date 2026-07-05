@@ -1,178 +1,319 @@
 <?php
-    $pageTitle = 'Companies';
+    $pageTitle = 'Convert Quotation';
     include '../../includes/header.php';
+
+    $id        = $_GET['id'] ?? '';
+    $db        = new DB();
+    $query     = "SELECT * FROM quotations WHERE id = '$id'";
+    $quotation = $db->get_row($query);
+    $user      = getUserDetailsFromUserId($quotation['added_by']);
 
 ?>
 
 
-<!--begin::Row-->
-<div class="row">
-    <div class="col-12">
-        <!-- Default box -->
-        <div class="card">
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"><?php echo $pageTitle ?></h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+
+        </div>
+    </div>
+    <div class="card-body">
+
+
+        <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Edit <?php echo $pageTitle ?></h3>
+                <h3 class="card-title">Client Details</h3>
+
                 <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse" title="Collapse">
-                        <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
-                        <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
                     </button>
-                    <button type="button" class="btn btn-tool" data-lte-toggle="card-remove" title="Remove">
-                        <i class="bi bi-x-lg"></i>
-                    </button>
+
                 </div>
             </div>
             <div class="card-body">
-
                 <?php
-                    if (isset($_GET['id'])) {
-                        $id      = $_GET['id'];
-                        $db      = new DB();
-                        $query   = "SELECT * FROM companies WHERE id = $id";
-                        $company = $db->get_row($query);
-                    }
+                    $quotation_id = $_GET['id'] ?? '';
+                    $company      = getCompanyDetailsFromQuotationId($quotation_id);
                 ?>
-                <form action="<?php echo BASE_URL ?>admin/companies/post/post.php" id="companyUpdateForm" method="post">
-                    <div class="row">
-                        <!-- Company Name -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="name">Company Name</label>
-                                <input type="text" class="form-control" id="name" name="name"
-                                    value="<?php echo $company['name']; ?>">
-                            </div>
-                        </div>
-                        <!-- Client Name -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="client_name">Client Name</label>
-                                <input type="text" class="form-control" id="client_name" name="client_name"
-                                    value="<?php echo $company['client_name']; ?>">
-                            </div>
-                        </div>
-                        <!-- Email -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="text" class="form-control" id="email" name="email"
-                                    value="<?php echo $company['email']; ?>">
-                            </div>
-                        </div>
-                        <!-- Phone -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="text" class="form-control" id="phone" name="phone"
-                                    value="<?php echo $company['phone']; ?>">
-                            </div>
-                        </div>
-                        <!-- CIN No -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="cin_no">CIN No</label>
-                                <input type="text" class="form-control" id="cin_no" name="cin_no"
-                                    value="<?php echo $company['cin_no']; ?>">
-                            </div>
-                        </div>
-                        <!-- GST No -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="gst_no">GST No</label>
-                                <input type="text" class="form-control" id="gst_no" name="gst_no"
-                                    value="<?php echo $company['gst_no']; ?>">
-                            </div>
-                        </div>
-                        <!-- PAN No -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="pan_no">PAN No</label>
-                                <input type="text" class="form-control" id="pan_no" name="pan_no"
-                                    value="<?php echo $company['pan_no']; ?>">
-                            </div>
-                        </div>
-                        <!-- Country Code -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="country_code">Country Code</label>
-                                <input type="text" class="form-control" id="country_code" name="country_code"
-                                    value="<?php echo $company['country_code']; ?>">
-                            </div>
-                        </div>
-                        <!-- Address -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="address">Street Address</label>
-                                <input type="text" class="form-control" id="address" name="address"
-                                    value="<?php echo $company['address']; ?>">
-                            </div>
-                        </div>
-                        <!-- City -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="city">City</label>
-                                <input type="text" class="form-control" id="city" name="city"
-                                    value="<?php echo $company['city']; ?>">
-                            </div>
-                        </div>
-                        <!-- State -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="state">State</label>
-                                <input type="text" class="form-control" id="state" name="state"
-                                    value="<?php echo $company['state']; ?>">
-                            </div>
-                        </div>
-                        <!-- Industry -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="industry">Industry</label>
-                                <input type="text" class="form-control" id="industry" name="industry"
-                                    value="<?php echo $company['industry']; ?>">
-                            </div>
-                        </div>
-                        <!-- Pin Code -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="pin_code">Pin Code</label>
-                                <input type="text" class="form-control" id="pin_code" name="pin_code"
-                                    value="<?php echo $company['pin_code']; ?>">
-                            </div>
-                        </div>
-                        <!-- Country -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="country">Country</label>
-                                <input type="text" class="form-control" id="country" name="country"
-                                    value="<?php echo $company['country']; ?>">
-                            </div>
-                        </div>
-                        <!-- Website -->
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="website">Website</label>
-                                <input type="text" class="form-control" id="website" name="website"
-                                    value="<?php echo $company['website']; ?>">
-                            </div>
-                        </div>
-                    </div>
-                    <input type="hidden" name="id" value="<?php echo $company['id']; ?>">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                <table class="table table-bordered table-hover client-table">
+                    <tr>
+                        <th>Company Name</th>
+                        <td><?php echo htmlspecialchars($company['name']) ?></td>
+
+                        <th>Company Address</th>
+                        <td><?php echo htmlspecialchars($company['address']) ?></td>
+                        <th>Company Phone</th>
+                        <td><?php echo htmlspecialchars($company['phone']) ?></td>
+                    </tr>
+                    <tr>
+                        <th>Company Email</th>
+                        <td><?php echo htmlspecialchars($company['email']) ?></td>
+
+                        <th>City</th>
+                        <td><?php echo htmlspecialchars($company['city']) ?></td>
+
+                        <th>State</th>
+                        <td><?php echo htmlspecialchars($company['state']) ?></td>
+
+
+                    </tr>
+                    <tr>
+                        <th>Country</th>
+                        <td><?php echo htmlspecialchars($company['country']) ?></td>
+                        <th>Account Manager</th>
+                        <td><?php echo htmlspecialchars($user['name']) ?></td>
+                        <th>Added Date</th>
+                        <td><?php echo date('F j, Y', strtotime($quotation['added_date'])) ?></td>
+                    </tr>
+
+
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+        <div class="card card-warning">
+            <div class="card-header">
+                <h3 class="card-title">Commercial Details</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+
+                </div>
+            </div>
+            <div class="card-body p-0 m-3">
+
+                <div class="table-responsive ">
+                    <table class="table table-bordered table-hover projects ">
+                        <thead>
+                            <tr>
+                                <th>Product Details</th>
+                                <th>Otc Price</th>
+                                <th>Total Price</th>
+                                <th>Sale Price</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                $quoteQuery = "SELECT
+                            qd.product_id,
+                            p.name AS product_name,
+                            q.*,
+                            atype.name AS attribute_type,
+                            a.attribute_name,
+                            a.price AS attribute_price,
+                            qd.total_price
+                        FROM quotations q
+                        JOIN quote_details qd ON q.id = qd.quotation_id
+                        JOIN products p ON qd.product_id = p.id
+                        JOIN attributes a ON qd.attribute_id = a.id
+                        JOIN attribute_types atype ON qd.attribute_type = atype.id
+                        WHERE q.id = '$id'";
+
+                                $results = $db->get_results($quoteQuery);
+
+                                if ($results) {
+                                    $products = [];
+                                    foreach ($results as $row) {
+                                        $product_id = $row['product_id'];
+                                        if (! isset($products[$product_id])) {
+                                            $products[$product_id] = [
+                                                'product_name'  => $row['product_name'],
+                                                'otc'           => $row['otc'],
+                                                'configuration' => [],
+                                                'total_price'   => 0,
+                                                'sale_price'    => 0,
+                                            ];
+                                        }
+                                        $products[$product_id]['configuration'][] =
+                                            $row['attribute_type'] . ': ' . $row['attribute_name'] .
+                                            ' (₹' . $row['attribute_price'] . ' / ₹' . $row['total_price'] . ')';
+                                        $products[$product_id]['total_price'] += $row['attribute_price'];
+                                        $products[$product_id]['sale_price'] += $row['total_price'];
+                                    }
+
+                                    $tp = 0;
+                                    foreach ($products as $product) {
+
+                                        $tp += $product['sale_price'];
+                                        echo '<tr>
+                                    <td>
+                                        <strong>' . htmlspecialchars($product['product_name']) . '</strong><br>
+                                        ' . implode('<br>', $product['configuration']) . '
+                                    </td>
+                                    <td>₹' . number_format($product['otc'], 2) . '</td>
+                                    <td>₹' . number_format($product['total_price'], 2) . '</td>
+                                    <td>₹' . number_format($product['sale_price'], 2) . '</td>
+                                    <td>₹' . number_format(($product['sale_price']), 2) . '</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info mr-2"
+                                            data-toggle="modal"
+                                            data-target="#viewModal"
+                                            data-productname="' . htmlspecialchars($product['product_name'], ENT_QUOTES) . '"
+                                            data-configuration="' . htmlspecialchars(implode('<br>', $product['configuration']), ENT_QUOTES) . '">
+                                            View
+                                        </button>
+                                        <button class="btn btn-sm btn-warning mr-2"
+                                            data-toggle="modal"
+                                            data-target="#editModal"
+                                            data-productname="' . htmlspecialchars($product['product_name'], ENT_QUOTES) . '"
+                                            data-configuration="' . htmlspecialchars(implode('<br>', $product['configuration']), ENT_QUOTES) . '"
+                                            data-productid="' . $product_id . '"
+
+
+                                            >
+                                            Edit
+                                        </button>
+
+                                    </td>
+                                </tr>';
+                                    }
+                                    echo '
+                            <td colspan="4" class="text-center">Total Amount (Total + OTC) </td>
+
+                            <td class="text-center">₹' . number_format(($tp + $results[0]['otc']), 2) . '</td><td>    </td></tr>';
+                                } else {
+                                    echo '<tr><td colspan="6" class="text-center">No quotation details found</td></tr>';
+                                }
+                            ?>
+                        </tbody>
+
+
+                    </table>
+                </div>
+                    <input type="hidden" name="quotation_id" id="quotation_id" value="<?php echo $quotation_id; ?>">
+
+                
+
 
 
             </div>
             <!-- /.card-body -->
-            <div class="card-footer">Footer</div>
-            <!-- /.card-footer-->
         </div>
         <!-- /.card -->
+
+
+
     </div>
+    <!-- /.card-body -->
+
 </div>
-<!--end::Row-->
+<!-- /.card -->
 
 
 <?php
     include '../../includes/footer.php';
 ?>
 
-<script src="<?php echo BASE_URL ?>customjs/companies.js"></script>
+<script src="<?php echo BASE_URL ?>customjs/quotation.js"></script>
+
+<!-- View Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Product Configuration Details</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="viewModalBody">
+                <h4 id="viewProductName"></h4>
+                <div id="viewConfiguration" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Product Configuration</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body " id="editModalBody">
+
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save Changes</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // View Modal Handler
+    $('#viewModal').on('show.bs.modal', function(event) {
+        const button = $(event.relatedTarget);
+        const productName = button.data('productname');
+        const configuration = button.data('configuration');
+
+        const quotation_id = $('#quotation_id').val();
+
+        $.ajax({
+            url: "post/convert-post.php",
+            type: "GET",
+            data: {
+                operation: "view_product",
+                quotation_id: quotation_id
+            },
+            dataType: "json",
+            success: function(response) {
+                if (response.success) {
+                    $("#viewModalBody").html(response.data);
+                } else {
+                    $("#viewModalBody").html("<p>No records found.</p>");
+                }
+            },
+        });
+
+    });
+
+    // Edit Modal Handler
+    $('#editModal').on('show.bs.modal', function(event) {
+        const button = $(event.relatedTarget);
+        const productName = button.data('productname');
+        const configuration = button.data('configuration');
+        const productid = button.data('productid');
+        const quotation_id = $('#quotation_id').val();
+
+        $.get(
+            'post/edit-product-modal.php', {
+                operation: 'edit_product',
+                product_id: productid,
+                quotation_id: quotation_id
+            },
+            function(response) {
+                // debugger
+                const responseJSON = JSON.parse(response);
+
+                $('#editModalBody').html(responseJSON.data);
+            }
+        );
+
+
+
+        // $('#editProductName').val(productName);
+        // $('#editConfiguration').val(configuration.replace(/<br\s*\/?>/gi, "\n"));
+    });
+});
+</script>
+
+<?

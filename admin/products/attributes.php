@@ -27,13 +27,12 @@
     <div class="form-group">
         <label for="attributeType">Type</label>
         <select class="form-control" id="attributeType" name="attributeType" required>
-            <option value="Ram">Ram</option>
-            <option value="HDD">HDD</option>
-            <option value="database">database</option>
-            <option value="CPU">CPU</option>
-            <option value="OS">OS</option>
-            <option value="IP">IP</option>
-            <option value="bandwidth">bandwidth</option>
+            <?php
+            $attribute_types = $db->get_results("SELECT * FROM attribute_types");
+            foreach ($attribute_types as $attribute) {
+                echo "<option value='".$attribute['id']."'>".$attribute['name']."</option>";
+            }
+            ?>
             <!-- Add more types as needed -->
         </select>
     </div>
@@ -79,10 +78,12 @@
             <?php
                 $attributes = $db->get_results("SELECT * FROM attributes");
                 foreach ($attributes as $row) {
+                    $attributeId = $row['attribute_type']; 
+                    $attributeType = getAttributeTypeById($attributeId); // Call
                     echo "<tr>
                     <td>{$row['id']}</td>
                     <td>{$row['attribute_name']}</td>
-                    <td>{$row['attribute_type']}</td>
+                    <td>{$attributeType['name']}</td>
                     <td>{$row['price']}</td>
                     <td>
                         " . ($row['status'] == "active" ? "<span class='badge badge-success'>Active</span>" : "<span class='badge badge-danger'>Inactive</span>") . "

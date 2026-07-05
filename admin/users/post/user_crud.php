@@ -20,16 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $id = !empty($data['id']) ? intval($data['id']) : 0;
 
-    // Check for duplicate email or username
-    $conditions = "email = '{$data['email']}' OR username = '{$data['username']}'";
-    if ($id) {
-        $conditions .= " AND id != $id";
-    }
-    $exists = $db->get_row("SELECT * FROM users WHERE $conditions");
-    if ($exists) {
-        $field = ($exists['email'] === $data['email']) ? 'Email' : 'Username';
-        echo json_encode(['type' => 'danger', 'message' => "$field already exists."]);
-        exit;
+    // Check for duplicate email or username only for new users
+    if (!$id) {
+        $exists = $db->get_row("SELECT * FROM users WHERE email = '{$data['email']}' OR username = '{$data['username']}'");
+        if ($exists) {
+            $field = ($exists['email'] === $data['email']) ? 'Email' : 'Username';
+            echo json_encode(['type' => 'danger', 'message' => "$field already exists."]);
+            exit;
+        }
     }
 
     if ($id) {
@@ -42,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(['type' => 'danger', 'message' => 'Password must be at least 6 characters.']);
             exit;
         }
+        unset($data['id']);
         $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
         $insert = $db->insert('users', $data);
         echo json_encode(['type' => $insert ? 'success' : 'danger', 'message' => $insert ? 'User added' : 'Failed to add user']);

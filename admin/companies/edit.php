@@ -151,7 +151,63 @@
                             <div class="form-group">
                                 <label for="website">Website</label>
                                 <input type="text" class="form-control" id="website" name="website"
-                                    value="<?php echo $company['website']; ?>">
+                                    value="<?php echo htmlspecialchars($company['website'] ?? ''); ?>">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="lead_value">Monthly Lead Value (INR)</label>
+                                <input type="number" step="0.01" class="form-control" id="lead_value" name="lead_value"
+                                    value="<?php echo htmlspecialchars($company['lead_value'] ?? '0.00'); ?>">
+                            </div>
+                        </div>
+
+                        <!-- IT Contact Name -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="it_contact_name">IT Contact Name</label>
+                                <input type="text" class="form-control" id="it_contact_name" name="it_contact_name"
+                                    value="<?php echo $company['it_contact_name']; ?>">
+                            </div>
+                        </div>
+                        <!-- IT Contact Email -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="it_contact_email">IT Contact Email</label>
+                                <input type="text" class="form-control" id="it_contact_email" name="it_contact_email"
+                                    value="<?php echo $company['it_contact_email']; ?>">
+                            </div>
+                        </div>
+                        <!-- IT Contact Phone -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="it_contact_phone">IT Contact Phone</label>
+                                <input type="text" class="form-control" id="it_contact_phone" name="it_contact_phone"
+                                    value="<?php echo $company['it_contact_phone']; ?>">
+                            </div>
+                        </div>
+                        <!-- Finance Contact Name -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="finance_contact_name">Finance Contact Name</label>
+                                <input type="text" class="form-control" id="finance_contact_name" name="finance_contact_name"
+                                    value="<?php echo $company['finance_contact_name']; ?>">
+                            </div>
+                        </div>
+                        <!-- Finance Contact Email -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="finance_contact_email">Finance Contact Email</label>
+                                <input type="text" class="form-control" id="finance_contact_email" name="finance_contact_email"
+                                    value="<?php echo $company['finance_contact_email']; ?>">
+                            </div>
+                        </div>
+                        <!-- Finance Contact Phone -->
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="finance_contact_phone">Finance Contact Phone</label>
+                                <input type="text" class="form-control" id="finance_contact_phone" name="finance_contact_phone"
+                                    value="<?php echo $company['finance_contact_phone']; ?>">
                             </div>
                         </div>
                     </div>

@@ -61,7 +61,7 @@ $(document).ready(function () {
   $(document).on("click", ".remove-item", function () {
     let id = $(this).data("id");
     $("#" + id).remove();
-    
+
     $('.item-checkbox[value="' + id + '"]').prop("checked", false);
     if ($("#dynamicTablesContainer table").length === 0) {
       $("#submit-quotation").hide();
@@ -116,32 +116,78 @@ $(document).ready(function () {
     total += otc;
 
     $("#sub_total").val(total.toFixed(2));
-
   }
 
-
-  $("#sub_total_btn").click(function() {
+  $("#sub_total_btn").click(function () {
     calculateTotalPrice();
   });
 
-  $("#otc").on("keyup", function() {
+  $("#otc").on("keyup", function () {
     calculateTotalPrice();
   });
-  
+
+  // Quotation status toggling (Demo/Live/Upgrade)
+  $(document).on("change", "#quotation_status", function () {
+    let status = $(this).val();
+    if (status === "demo") {
+      $("#demo_dates_row").show();
+      $(".billing-info-row").hide();
+    } else {
+      $("#demo_dates_row").hide();
+      $(".billing-info-row").show();
+    }
+  });
+
+  // Trigger initial state
+  if ($("#quotation_status").length) {
+    $("#quotation_status").trigger("change");
+  }
+
+  // Serialize custom products to JSON
+  $(document).on("input change", ".coloc-dc, .coloc-details", function () {
+    let $wrapper = $(this).closest("td");
+    let json = {
+      data_center: $wrapper.find(".coloc-dc").val(),
+      server_details: $wrapper.find(".coloc-details").val()
+    };
+    $wrapper.find(".custom-details-json").val(JSON.stringify(json));
+  });
+
+  $(document).on("input change", ".email-provider, .email-model, .email-tax", function () {
+    let $wrapper = $(this).closest("td");
+    let json = {
+      provider: $wrapper.find(".email-provider").val(),
+      pricing_model: $wrapper.find(".email-model").val(),
+      tax: $wrapper.find(".email-tax").val()
+    };
+    $wrapper.find(".custom-details-json").val(JSON.stringify(json));
+  });
+
+  $(document).on("input change", ".backup-type, .backup-unit-type", function () {
+    let $wrapper = $(this).closest("td");
+    let json = {
+      type: $wrapper.find(".backup-type").val(),
+      unit_type: $wrapper.find(".backup-unit-type").val()
+    };
+    $wrapper.find(".custom-details-json").val(JSON.stringify(json));
+  });
 
   // Call function when page loads and when changes are made
-  
-
-
 
   $("#allProductAttributesForm").on("submit", function (e) {
     e.preventDefault();
 
+    var formData = new FormData(this);
+    formData.append("operation", "convert");
     $.ajax({
       url: $(this).attr("action"),
       method: "POST",
-      data: $(this).serialize(),
+      data: formData,
+      contentType: false,
+      processData: false,
+      cache: false,
       success: function (response) {
+        debugger;
         // toastr.success("Lead saved successfully!", "success");
         response = JSON.parse(response);
         if (response.success == true) {
@@ -154,5 +200,132 @@ $(document).ready(function () {
         toastr.error("AJAX error occurred.", "Error!!");
       },
     });
+  });
+
+  $("#allProductAttributesFormDemo").on("submit", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("operation", "convert");
+    $.ajax({
+      url: $(this).attr("action"),
+      method: "POST",
+      data: formData,
+      contentType: false,
+      processData: false,
+      cache: false,
+      success: function (response) {
+        debugger;
+        // toastr.success("Lead saved successfully!", "success");
+        response = JSON.parse(response);
+        if (response.success == true) {
+          toastr.success(response.message, "Success");
+        } else {
+          toastr.error(response.message, "Error!!");
+        }
+      },
+      error: function () {
+        toastr.error("AJAX error occurred.", "Error!!");
+      },
+    });
+  });
+
+  $(document).on("click", "#saveProductBtn", function (e) {
+    e.preventDefault();
+
+    let formData = $("#editProductForm").serialize(); // serialize all inputs in form
+    formData += "&operation=save_product";
+
+    $.ajax({
+      url: "post/edit-product-modal.php", // your PHP handler file
+      type: "POST",
+      data: formData,
+      dataType: "json",
+      beforeSend: function () {
+        $("#saveProductBtn").prop("disabled", true).text("Saving...");
+      },
+      success: function (response) {
+        if (response.success) {
+          alert(response.message);
+          location.reload();
+
+          // Optionally refresh products table or close modal
+          // $("#productsTable").load(location.href + " #productsTable");
+        } else {
+          toastr.error(response.message, "Error");
+        }
+      },
+      error: function (xhr, status, error) {
+        console.log("AJAX Error:", error);
+        toastr.error("Something went wrong while saving product.", "Error!!");
+      },
+      complete: function () {
+        $("#saveProductBtn").prop("disabled", false).text("Save");
+      },
+    });
+  });
+
+  function loadViewTable(quotationId) {
+    $.ajax({
+      url: "post/convert-post.php",
+      type: "GET",
+      data: { operation: "view_product", quotation_id: quotationId },
+      dataType: "json",
+      success: function (response) {
+        if (response.success) {
+          $("#viewTableContainer").html(response.data);
+        } else {
+          $("#viewTableContainer").html("<p>No records found.</p>");
+        }
+      },
+    });
+  }
+});
+
+$(document).ready(function () {
+  // Fetch quotation when SOF ID is entered and focus leaves input
+  $("#sof_id").on("keyup", function () {
+    let sofId = $(this).val().trim();
+    if (sofId.length >= 3) {
+      if (sofId) {
+        $.get(
+          "post/delete-post.php",
+          { sof_id: sofId },
+          function (data) {
+            if (data && data.sof_id) {
+              $("#quotationDetails").show();
+              $("#detail_sof_id").text(data.sof_id);
+              $("#detail_company").text(data.name);
+              $("#detail_email").text(data.email);
+              $("#detail_phone").text(data.phone);
+            } else {
+              $("#quotationDetails").hide();
+              toastr.error("No quotation found for SOF ID: " + sofId);
+            }
+          },
+          "json"
+        );
+      }
+    }
+  });
+
+  // Submit request
+  $("#deleteRequestForm").on("submit", function (e) {
+    e.preventDefault();
+    let formData = $(this).serialize() + "&operation=delete_request";
+    $.post(
+      "post/delete-post.php",
+      formData,
+      function (response) {
+        if (response.status === "success") {
+          toastr.success(response.message);
+          $("#deleteRequestForm")[0].reset();
+          $("#quotationDetails").hide();
+        } else {
+          toastr.error(response.message);
+        }
+      },
+      "json"
+    );
   });
 });
