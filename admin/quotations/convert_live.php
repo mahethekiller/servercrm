@@ -106,42 +106,60 @@
                         </thead>
                         <tbody>
                             <?php
-                                $quoteQuery = "SELECT
-                            qd.product_id,
-                            p.name AS product_name,
-                            q.*,
-                            atype.name AS attribute_type,
-                            a.attribute_name,
-                            a.price AS attribute_price,
-                            qd.total_price
-                        FROM quotations q
-                        JOIN quote_details qd ON q.id = qd.quotation_id
-                        JOIN products p ON qd.product_id = p.id
-                        JOIN attributes a ON qd.attribute_id = a.id
-                        JOIN attribute_types atype ON qd.attribute_type = atype.id
-                        WHERE q.id = '$id'";
+                                 $quoteQuery = "SELECT
+                             qd.product_id,
+                             p.name AS product_name,
+                             q.*,
+                             atype.name AS attribute_type,
+                             a.attribute_name,
+                             a.price AS attribute_price,
+                             qd.total_price,
+                             qd.custom_details
+                         FROM quotations q
+                         JOIN quote_details qd ON q.id = qd.quotation_id
+                         JOIN products p ON qd.product_id = p.id
+                         JOIN attributes a ON qd.attribute_id = a.id
+                         JOIN attribute_types atype ON qd.attribute_type = atype.id
+                         WHERE q.id = '$id'";
 
-                                $results = $db->get_results($quoteQuery);
+                                 $results = $db->get_results($quoteQuery);
 
-                                if ($results) {
-                                    $products = [];
-                                    foreach ($results as $row) {
-                                        $product_id = $row['product_id'];
-                                        if (! isset($products[$product_id])) {
-                                            $products[$product_id] = [
-                                                'product_name'  => $row['product_name'],
-                                                'otc'           => $row['otc'],
-                                                'configuration' => [],
-                                                'total_price'   => 0,
-                                                'sale_price'    => 0,
-                                            ];
-                                        }
-                                        $products[$product_id]['configuration'][] =
-                                            $row['attribute_type'] . ': ' . $row['attribute_name'] .
-                                            ' (₹' . $row['attribute_price'] . ' / ₹' . $row['total_price'] . ')';
-                                        $products[$product_id]['total_price'] += $row['attribute_price'];
-                                        $products[$product_id]['sale_price'] += $row['total_price'];
-                                    }
+                                 if ($results) {
+                                     $products = [];
+                                     foreach ($results as $row) {
+                                         $product_id = $row['product_id'];
+                                         if (! isset($products[$product_id])) {
+                                             $products[$product_id] = [
+                                                 'product_name'  => $row['product_name'],
+                                                 'otc'           => $row['otc'],
+                                                 'configuration' => [],
+                                                 'total_price'   => 0,
+                                                 'sale_price'    => 0,
+                                             ];
+                                         }
+                                         
+                                         if (!empty($row['custom_details'])) {
+                                             $customStr = '';
+                                             $customJson = json_decode($row['custom_details'] ?? '', true);
+                                             if (is_array($customJson)) {
+                                                 $pairs = [];
+                                                 foreach ($customJson as $k => $v) {
+                                                     $pairs[] = ucfirst(str_replace('_', ' ', $k)) . ': ' . $v;
+                                                 }
+                                                 $customStr = implode(', ', $pairs);
+                                             } else {
+                                                 $customStr = $row['custom_details'];
+                                             }
+                                             $configLine = (!empty($customStr) ? $customStr : 'Custom Details');
+                                         } else {
+                                             $configLine = $row['attribute_type'] . ': ' . $row['attribute_name'];
+                                         }
+                                         
+                                         $products[$product_id]['configuration'][] =
+                                             $configLine . ' (₹' . $row['attribute_price'] . ' / ₹' . $row['total_price'] . ')';
+                                         $products[$product_id]['total_price'] += $row['attribute_price'];
+                                         $products[$product_id]['sale_price'] += $row['total_price'];
+                                     }
 
                                     $tp = 0;
                                     foreach ($products as $product) {

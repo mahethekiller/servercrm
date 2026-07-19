@@ -130,26 +130,7 @@
                             <table class="table table-condensed table-bordered">
 
                                 <tbody>
-                                    <tr>
-                                        <td>Quotation Status</td>
-                                        <td>
-                                            <select class="form-control" name="quotation_status" id="quotation_status">
-                                                <option value="demo" selected>Demo</option>
-                                                <option value="live">Live</option>
-                                                <option value="upgrade">Upgrade</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr id="demo_dates_row" style="display: none;">
-                                        <td>Demo Dates</td>
-                                        <td>
-                                            <div class="d-flex gap-2">
-                                                <input type="date" class="form-control" name="demo_start_date" placeholder="Start">
-                                                <input type="date" class="form-control" name="demo_end_date" placeholder="End">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="billing-info-row" style="display: none;">
+                                    <tr class="billing-info-row">
                                         <td>Billing Info</td>
                                         <td>
                                             <strong>GST:</strong> <?php echo htmlspecialchars($company['gst_no'] ?: 'N/A'); ?><br>

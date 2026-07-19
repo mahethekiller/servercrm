@@ -113,7 +113,8 @@
                             atype.name AS attribute_type,
                             a.attribute_name,
                             a.price AS attribute_price,
-                            qd.total_price
+                            qd.total_price,
+                            qd.custom_details
                         FROM quotations q
                         JOIN quote_details qd ON q.id = qd.quotation_id
                         JOIN products p ON qd.product_id = p.id
@@ -136,9 +137,26 @@
                                                 'sale_price'    => 0,
                                             ];
                                         }
+                                        
+                                        if (!empty($row['custom_details'])) {
+                                            $customStr = '';
+                                            $customJson = json_decode($row['custom_details'] ?? '', true);
+                                            if (is_array($customJson)) {
+                                                $pairs = [];
+                                                foreach ($customJson as $k => $v) {
+                                                    $pairs[] = ucfirst(str_replace('_', ' ', $k)) . ': ' . $v;
+                                                }
+                                                $customStr = implode(', ', $pairs);
+                                            } else {
+                                                $customStr = $row['custom_details'];
+                                            }
+                                            $configLine = (!empty($customStr) ? $customStr : 'Custom Details');
+                                        } else {
+                                            $configLine = $row['attribute_type'] . ': ' . $row['attribute_name'];
+                                        }
+                                        
                                         $products[$product_id]['configuration'][] =
-                                            $row['attribute_type'] . ': ' . $row['attribute_name'] .
-                                            ' (₹' . $row['attribute_price'] . ' / ₹' . $row['total_price'] . ')';
+                                            $configLine . ' (₹' . $row['attribute_price'] . ' / ₹' . $row['total_price'] . ')';
                                         $products[$product_id]['total_price'] += $row['attribute_price'];
                                         $products[$product_id]['sale_price'] += $row['total_price'];
                                     }
@@ -242,275 +260,28 @@
                     </div>
 
 
-                    <div class="clientsinfo m-3">
+                    <div class="demo-dates-section m-3">
                         <fieldset class="border p-3 rounded">
-                            <legend class="float-none w-auto px-2">Billing Information</legend>
+                            <legend class="float-none w-auto px-2">Demo Dates</legend>
 
                             <p class="text-muted small">* required fields</p>
 
                             <div class="row">
                                 <!-- Left Column -->
                                 <div class="col-md-6">
-                                    <?php //echo $results[0]['client_confirmation']; ?>
-
-                                    <!-- Contract Term -->
-                                    <div class="mb-3 row align-items-center">
-                                        <label for="contract_terms_yrs" class="col-sm-4 col-form-label">Contract
-                                            Term:</label>
-                                        <div class="col-sm-8 d-flex">
-                                            <select class="form-select me-2" id="contract_terms_yrs"
-                                                name="contract_terms_yrs" style="max-width:100px;">
-                                                <?php
-                                                    foreach (range(0, 10) as $num) {
-                                                        $selected = ($results[0]['contract_terms_yrs'] == $num) ? 'selected' : '';
-                                                        echo "<option value='$num' $selected>$num</option>";
-                                                    }
-                                                ?>
-                                            </select>
-                                            <span class="align-self-center me-3">Years</span>
-
-                                            <select class="form-select me-2" id="contract_term_month"
-                                                name="contract_term_month" style="max-width:100px;">
-                                                <?php
-                                                     foreach (range(0, 11) as $num) {
-                                                         $selected = ($results[0]['contract_term_month'] == $num) ? 'selected' : '';
-                                                         echo "<option value='$num' $selected>$num</option>";
-                                                     }
-                                                 ?>
-                                            </select>
-                                            <span class="align-self-center">Months</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Billing Cycle -->
                                     <div class="mb-3 row">
-                                        <label for="billing_cycle" class="col-sm-4 col-form-label">Billing
-                                            Cycle*:</label>
+                                        <label for="demo_start_date" class="col-sm-4 col-form-label">Demo Start Date*:</label>
                                         <div class="col-sm-8">
-                                            <select class="form-select" id="billing_cycle" name="billing_cycle">
-                                                <option value="1"
-                                                    <?php echo($results[0]['billing_cycle'] == '1') ? 'selected' : ''; ?>>
-                                                    Monthly</option>
-                                                <option value="3"
-                                                    <?php echo($results[0]['billing_cycle'] == '3') ? 'selected' : ''; ?>>
-                                                    Quarterly</option>
-                                                <option value="5"
-                                                    <?php echo($results[0]['billing_cycle'] == '5') ? 'selected' : ''; ?>>
-                                                    Half-Yearly</option>
-                                                <option value="6"
-                                                    <?php echo($results[0]['billing_cycle'] == '6') ? 'selected' : ''; ?>>
-                                                    Yearly</option>
-                                                <option value="7"
-                                                    <?php echo($results[0]['billing_cycle'] == '7') ? 'selected' : ''; ?>>
-                                                    One Time</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Billing Period -->
-                                    <div class="mb-3 row">
-                                        <label for="billing_period" class="col-sm-4 col-form-label">Billing Period
-                                            From:</label>
-                                        <div class="col-sm-8">
-                                            <input type="date" class="form-control" id="billing_period"
-                                                name="billing_period"
-                                                value="<?php echo $results[0]['billing_period']; ?>">
-                                        </div>
-                                    </div>
-
-                                    <!-- Billing Start -->
-                                    <div class="mb-3 row">
-                                        <label for="billing_start" class="col-sm-4 col-form-label">Is Billing
-                                            Start:</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-select" id="billing_start" name="billing_start">
-                                                <option value="Yes"
-                                                    <?php echo($results[0]['billing_start'] == 'Yes') ? 'selected' : ''; ?>>
-                                                    YES</option>
-                                                <option value="No"
-                                                    <?php echo($results[0]['billing_start'] == 'No') ? 'selected' : ''; ?>>
-                                                    No</option>
-                                            </select>
+                                            <input type="date" class="form-control" id="demo_start_date" name="demo_start_date" required value="<?php echo htmlspecialchars($results[0]['demo_start_date'] ?? ''); ?>">
                                         </div>
                                     </div>
                                 </div>
-
                                 <!-- Right Column -->
                                 <div class="col-md-6">
-
-                                    <!-- Delivery Period -->
-                                    <div class="mb-3 row align-items-center">
-                                        <label for="delivery_period_week" class="col-sm-4 col-form-label">Expected
-                                            Delivery
-                                            Period:</label>
-                                        <div class="col-sm-8 d-flex">
-                                            <select class="form-select me-2" id="delivery_period_week"
-                                                name="delivery_period_week" style="max-width:80px;">
-                                                <option value="0"
-                                                    <?php echo($results[0]['delivery_period_week'] == '0') ? 'selected' : ''; ?>>
-                                                    0</option>
-                                                <option value="1"
-                                                    <?php echo($results[0]['delivery_period_week'] == '1') ? 'selected' : ''; ?>>
-                                                    1</option>
-                                                <option value="2"
-                                                    <?php echo($results[0]['delivery_period_week'] == '2') ? 'selected' : ''; ?>>
-                                                    2</option>
-                                                <option value="3"
-                                                    <?php echo($results[0]['delivery_period_week'] == '3') ? 'selected' : ''; ?>>
-                                                    3</option>
-                                                <option value="4"
-                                                    <?php echo($results[0]['delivery_period_week'] == '4') ? 'selected' : ''; ?>>
-                                                    4</option>
-                                            </select>
-                                            <span class="align-self-center me-3">Week</span>
-
-                                            <select class="form-select me-2" id="delivery_period" name="delivery_period"
-                                                style="max-width:80px;">
-                                                <option value="0"
-                                                    <?php echo($results[0]['delivery_period'] == '0') ? 'selected' : ''; ?>>
-                                                    0</option>
-                                                <option value="1"
-                                                    <?php echo($results[0]['delivery_period'] == '1') ? 'selected' : ''; ?>>
-                                                    1</option>
-                                                <option value="2"
-                                                    <?php echo($results[0]['delivery_period'] == '2') ? 'selected' : ''; ?>>
-                                                    2</option>
-                                                <option value="3"
-                                                    <?php echo($results[0]['delivery_period'] == '3') ? 'selected' : ''; ?>>
-                                                    3</option>
-                                                <option value="4"
-                                                    <?php echo($results[0]['delivery_period'] == '4') ? 'selected' : ''; ?>>
-                                                    4</option>
-                                                <option value="5"
-                                                    <?php echo($results[0]['delivery_period'] == '5') ? 'selected' : ''; ?>>
-                                                    5</option>
-                                                <option value="6"
-                                                    <?php echo($results[0]['delivery_period'] == '6') ? 'selected' : ''; ?>>
-                                                    6</option>
-                                                <option value="7"
-                                                    <?php echo($results[0]['delivery_period'] == '7') ? 'selected' : ''; ?>>
-                                                    7</option>
-                                                <option value="8"
-                                                    <?php echo($results[0]['delivery_period'] == '8') ? 'selected' : ''; ?>>
-                                                    8</option>
-                                                <option value="9"
-                                                    <?php echo($results[0]['delivery_period'] == '9') ? 'selected' : ''; ?>>
-                                                    9</option>
-                                                <option value="10"
-                                                    <?php echo($results[0]['delivery_period'] == '10') ? 'selected' : ''; ?>>
-                                                    10</option>
-                                                <option value="11"
-                                                    <?php echo($results[0]['delivery_period'] == '11') ? 'selected' : ''; ?>>
-                                                    11</option>
-                                                <option value="12"
-                                                    <?php echo($results[0]['delivery_period'] == '12') ? 'selected' : ''; ?>>
-                                                    12</option>
-                                                <option value="13"
-                                                    <?php echo($results[0]['delivery_period'] == '13') ? 'selected' : ''; ?>>
-                                                    13</option>
-                                                <option value="14"
-                                                    <?php echo($results[0]['delivery_period'] == '14') ? 'selected' : ''; ?>>
-                                                    14</option>
-                                                <option value="15"
-                                                    <?php echo($results[0]['delivery_period'] == '15') ? 'selected' : ''; ?>>
-                                                    15</option>
-                                                <option value="16"
-                                                    <?php echo($results[0]['delivery_period'] == '16') ? 'selected' : ''; ?>>
-                                                    16</option>
-                                                <option value="17"
-                                                    <?php echo($results[0]['delivery_period'] == '17') ? 'selected' : ''; ?>>
-                                                    17</option>
-                                                <option value="18"
-                                                    <?php echo($results[0]['delivery_period'] == '18') ? 'selected' : ''; ?>>
-                                                    18</option>
-                                                <option value="19"
-                                                    <?php echo($results[0]['delivery_period'] == '19') ? 'selected' : ''; ?>>
-                                                    19</option>
-                                                <option value="20"
-                                                    <?php echo($results[0]['delivery_period'] == '20') ? 'selected' : ''; ?>>
-                                                    20</option>
-                                                <option value="21"
-                                                    <?php echo($results[0]['delivery_period'] == '21') ? 'selected' : ''; ?>>
-                                                    21</option>
-                                                <option value="22"
-                                                    <?php echo($results[0]['delivery_period'] == '22') ? 'selected' : ''; ?>>
-                                                    22</option>
-                                                <option value="23"
-                                                    <?php echo($results[0]['delivery_period'] == '23') ? 'selected' : ''; ?>>
-                                                    23</option>
-                                                <option value="24"
-                                                    <?php echo($results[0]['delivery_period'] == '24') ? 'selected' : ''; ?>>
-                                                    24</option>
-                                                <option value="25"
-                                                    <?php echo($results[0]['delivery_period'] == '25') ? 'selected' : ''; ?>>
-                                                    25</option>
-                                                <option value="26"
-                                                    <?php echo($results[0]['delivery_period'] == '26') ? 'selected' : ''; ?>>
-                                                    26</option>
-                                                <option value="27"
-                                                    <?php echo($results[0]['delivery_period'] == '27') ? 'selected' : ''; ?>>
-                                                    27</option>
-                                                <option value="28"
-                                                    <?php echo($results[0]['delivery_period'] == '28') ? 'selected' : ''; ?>>
-                                                    28</option>
-                                                <option value="29"
-                                                    <?php echo($results[0]['delivery_period'] == '29') ? 'selected' : ''; ?>>
-                                                    29</option>
-                                            </select>
-                                            <span class="align-self-center">Days</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Currency -->
                                     <div class="mb-3 row">
-                                        <label for="currency" class="col-sm-4 col-form-label">Currency:</label>
+                                        <label for="demo_end_date" class="col-sm-4 col-form-label">Demo End Date*:</label>
                                         <div class="col-sm-8">
-                                            <select class="form-select" id="currency" name="currency">
-                                                <option value="INR"
-                                                    <?php echo($results[0]['currency'] == 'INR') ? 'selected' : ''; ?>>
-                                                    INR</option>
-                                                <option value="AUD"
-                                                    <?php echo($results[0]['currency'] == 'AUD') ? 'selected' : ''; ?>>
-                                                    AUD</option>
-                                                <option value="USD"
-                                                    <?php echo($results[0]['currency'] == 'USD') ? 'selected' : ''; ?>>
-                                                    USD</option>
-                                                <option value="AED"
-                                                    <?php echo($results[0]['currency'] == 'AED') ? 'selected' : ''; ?>>
-                                                    AED</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Service Tax -->
-                                    <div class="mb-3 row">
-                                        <label for="applicabletax" class="col-sm-4 col-form-label">Service Tax
-                                            Applicable?:</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-select" id="applicabletax" name="applicabletax">
-                                                <option value="1"
-                                                    <?php echo($results[0]['applicabletax'] == '1') ? 'selected' : ''; ?>>
-                                                    No</option>
-                                                <option value="0"
-                                                    <?php echo($results[0]['applicabletax'] == '0') ? 'selected' : ''; ?>>
-                                                    YES</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- VAT -->
-                                    <div class="mb-3 row">
-                                        <label for="applicablevat" class="col-sm-4 col-form-label">Vat
-                                            Applicable?:</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-select" id="applicablevat" name="applicablevat">
-                                                <option value="1"
-                                                    <?php echo($results[0]['applicablevat'] == '1') ? 'selected' : ''; ?>>
-                                                    No</option>
-                                                <option value="0"
-                                                    <?php echo($results[0]['applicablevat'] == '0') ? 'selected' : ''; ?>>
-                                                    YES</option>
-                                            </select>
+                                            <input type="date" class="form-control" id="demo_end_date" name="demo_end_date" required value="<?php echo htmlspecialchars($results[0]['demo_end_date'] ?? ''); ?>">
                                         </div>
                                     </div>
                                 </div>

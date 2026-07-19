@@ -128,10 +128,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['operation']) && $_GET['
         <tbody>';
 
     foreach ($rows as $row) {
+        $pName = $row['product_name'];
+        $tName = $row['type_name'];
+        $aName = $row['attribute_name'];
+
+        if (!empty($row['custom_details'])) {
+            $tName = 'Custom';
+            $customStr = '';
+            $customJson = json_decode($row['custom_details'], true);
+            if (is_array($customJson)) {
+                $pairs = [];
+                foreach ($customJson as $k => $v) {
+                    $pairs[] = ucfirst(str_replace('_', ' ', $k)) . ': ' . $v;
+                }
+                $customStr = implode(', ', $pairs);
+            } else {
+                $customStr = $row['custom_details'];
+            }
+            $aName = !empty($customStr) ? $customStr : 'Custom Details';
+        }
+
         $tableHtml .= '<tr>
-            <td>' . htmlspecialchars($row['product_name'], ENT_QUOTES) . '</td>
-            <td>' . htmlspecialchars($row['type_name'], ENT_QUOTES) . '</td>
-            <td>' . htmlspecialchars($row['attribute_name'], ENT_QUOTES) . '</td>
+            <td>' . htmlspecialchars($pName ?? '', ENT_QUOTES) . '</td>
+            <td>' . htmlspecialchars($tName ?? '', ENT_QUOTES) . '</td>
+            <td>' . htmlspecialchars($aName ?? '', ENT_QUOTES) . '</td>
             <td>' . number_format($row['reg_price'], 2) . '</td>
             <td>' . intval($row['unit']) . '</td>
             <td>' . number_format($row['sale_price'], 2) . '</td>

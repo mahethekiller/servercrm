@@ -210,6 +210,63 @@
                                     value="<?php echo $company['finance_contact_phone']; ?>">
                             </div>
                         </div>
+
+                        <!-- Custom Contacts Section -->
+                        <div class="col-12 mt-4 border-top pt-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">Custom Contact Details</h5>
+                                <button type="button" class="btn btn-success btn-sm" id="add-more-contact-btn">
+                                    <i class="bi bi-plus-lg"></i> Add More
+                                </button>
+                            </div>
+                            <div id="custom-contacts-wrapper">
+                                <?php
+                                $customContacts = [];
+                                if (!empty($company['custom_contacts'])) {
+                                    $customContacts = json_decode($company['custom_contacts'], true) ?: [];
+                                }
+                                foreach ($customContacts as $contact):
+                                ?>
+                                <div class="row custom-contact-row align-items-end mb-3 border-bottom pb-3">
+                                    <div class="col-3">
+                                        <div class="form-group mb-0">
+                                            <label>Title/Role <span style="color:red">*</span></label>
+                                            <input type="text" class="form-control" name="custom_contact_titles[]" 
+                                                   value="<?php echo htmlspecialchars($contact['title'] ?? ''); ?>" placeholder="e.g. HR Manager" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group mb-0">
+                                            <label>Contact Name <span style="color:red">*</span></label>
+                                            <input type="text" class="form-control" name="custom_contact_names[]" 
+                                                   value="<?php echo htmlspecialchars($contact['name'] ?? ''); ?>" placeholder="Name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group mb-0">
+                                            <label>Email</label>
+                                            <input type="email" class="form-control" name="custom_contact_emails[]" 
+                                                   value="<?php echo htmlspecialchars($contact['email'] ?? ''); ?>" placeholder="Email">
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="form-group mb-0">
+                                            <label>Phone</label>
+                                            <input type="tel" class="form-control" name="custom_contact_phones[]" 
+                                                   value="<?php echo htmlspecialchars($contact['phone'] ?? ''); ?>" placeholder="Phone">
+                                        </div>
+                                    </div>
+                                    <div class="col-1">
+                                        <div class="form-group mb-0">
+                                            <button type="button" class="btn btn-danger btn-block remove-contact-btn" title="Remove Contact">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
                     </div>
                     <input type="hidden" name="id" value="<?php echo $company['id']; ?>">
                     <button type="submit" class="btn btn-primary">Submit</button>

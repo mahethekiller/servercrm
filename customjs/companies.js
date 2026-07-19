@@ -17,6 +17,24 @@ $(document).ready(function () {
     $("#c_created").text($(this).data("created"));
     $("#c_updated").text($(this).data("updated"));
 
+    // Render custom contacts
+    var customContactsData = $(this).data("custom-contacts");
+    try {
+        var contacts = typeof customContactsData === 'string' ? JSON.parse(customContactsData) : customContactsData;
+        var html = '';
+        if (contacts && contacts.length > 0) {
+            contacts.forEach(function(c) {
+                html += `<div><strong>${c.title}:</strong> ${c.name} (Email: ${c.email || 'N/A'}, Phone: ${c.phone || 'N/A'})</div>`;
+            });
+            $("#c_custom_contacts").html(html);
+            $("#custom_contacts_row").show();
+        } else {
+            $("#custom_contacts_row").hide();
+        }
+    } catch(e) {
+        $("#custom_contacts_row").hide();
+    }
+
     $("#companyViewModal").modal("show");
 });
 
@@ -28,6 +46,49 @@ $(document).ready(function () {
     ordering: true,
     info: true,
     autoWidth: false,
+  });
+
+  // Add more custom contacts
+  $("#add-more-contact-btn").click(function () {
+      var html = `
+      <div class="row custom-contact-row align-items-end mb-3 border-bottom pb-3">
+          <div class="col-3">
+              <div class="form-group mb-0">
+                  <label>Title/Role <span style="color:red">*</span></label>
+                  <input type="text" class="form-control" name="custom_contact_titles[]" placeholder="e.g. HR Manager" required>
+              </div>
+          </div>
+          <div class="col-3">
+              <div class="form-group mb-0">
+                  <label>Contact Name <span style="color:red">*</span></label>
+                  <input type="text" class="form-control" name="custom_contact_names[]" placeholder="Name" required>
+              </div>
+          </div>
+          <div class="col-3">
+              <div class="form-group mb-0">
+                  <label>Email</label>
+                  <input type="email" class="form-control" name="custom_contact_emails[]" placeholder="Email">
+              </div>
+          </div>
+          <div class="col-2">
+              <div class="form-group mb-0">
+                  <label>Phone</label>
+                  <input type="tel" class="form-control" name="custom_contact_phones[]" placeholder="Phone">
+              </div>
+          </div>
+          <div class="col-1">
+              <div class="form-group mb-0">
+                  <button type="button" class="btn btn-danger btn-block remove-contact-btn" title="Remove Contact">
+                      <i class="bi bi-trash"></i>
+                  </button>
+              </div>
+          </div>
+      </div>`;
+      $("#custom-contacts-wrapper").append(html);
+  });
+
+  $(document).on("click", ".remove-contact-btn", function () {
+      $(this).closest(".custom-contact-row").remove();
   });
 });
 

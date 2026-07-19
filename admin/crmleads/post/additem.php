@@ -49,6 +49,15 @@ if (isset($_GET['operation']) && $_GET['operation'] === 'add_product') {
             <td><button class="btn btn-xs btn-primary recalc-btn" type="button">Re-Calculate</button></td>
         </tr>
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6" class="text-right p-2">
+                <button type="button" class="btn btn-success btn-xs add-custom-row-btn" data-product-id="3">
+                    <i class="fas fa-plus"></i> Add Custom Row
+                </button>
+            </td>
+        </tr>
+    </tfoot>
 </table>
 <span><button class="btn btn-danger remove-item" data-id="3">Remove</button></span>';
             echo json_encode(['success' => true, 'data' => $tableHtml]);
@@ -100,6 +109,15 @@ if (isset($_GET['operation']) && $_GET['operation'] === 'add_product') {
             <td><button class="btn btn-xs btn-primary recalc-btn" type="button">Re-Calculate</button></td>
         </tr>
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6" class="text-right p-2">
+                <button type="button" class="btn btn-success btn-xs add-custom-row-btn" data-product-id="4">
+                    <i class="fas fa-plus"></i> Add Custom Row
+                </button>
+            </td>
+        </tr>
+    </tfoot>
 </table>
 <span><button class="btn btn-danger remove-item" data-id="4">Remove</button></span>';
             echo json_encode(['success' => true, 'data' => $tableHtml]);
@@ -149,6 +167,15 @@ if (isset($_GET['operation']) && $_GET['operation'] === 'add_product') {
             <td><button class="btn btn-xs btn-primary recalc-btn" type="button">Re-Calculate</button></td>
         </tr>
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6" class="text-right p-2">
+                <button type="button" class="btn btn-success btn-xs add-custom-row-btn" data-product-id="5">
+                    <i class="fas fa-plus"></i> Add Custom Row
+                </button>
+            </td>
+        </tr>
+    </tfoot>
 </table>
 <span><button class="btn btn-danger remove-item" data-id="5">Remove</button></span>';
             echo json_encode(['success' => true, 'data' => $tableHtml]);
@@ -223,6 +250,15 @@ if (isset($_GET['operation']) && $_GET['operation'] === 'add_product') {
 
         $tableHtml .= '
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6" class="text-right p-2">
+                <button type="button" class="btn btn-success btn-xs add-custom-row-btn" data-product-id="' . $productId . '">
+                    <i class="fas fa-plus"></i> Add Custom Row
+                </button>
+            </td>
+        </tr>
+    </tfoot>
 </table>
     <span><button class="btn btn-danger remove-item" data-id="' . $productId . '">Remove</button></span>
 

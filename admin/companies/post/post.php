@@ -30,6 +30,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['operation']) && $_POS
     $finance_contact_phone = trim($_POST['finance_contact_phone'] ?? '');
     $lead_value            = trim($_POST['lead_value'] ?? '0.00');
 
+    // === Custom Contacts ===
+    $custom_contacts = [];
+    if (isset($_POST['custom_contact_titles']) && is_array($_POST['custom_contact_titles'])) {
+        foreach ($_POST['custom_contact_titles'] as $index => $title) {
+            $title = trim($title);
+            $c_name = trim($_POST['custom_contact_names'][$index] ?? '');
+            $c_email = trim($_POST['custom_contact_emails'][$index] ?? '');
+            $c_phone = trim($_POST['custom_contact_phones'][$index] ?? '');
+
+            if (!empty($title) && !empty($c_name)) {
+                if (!empty($c_email) && !filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
+                    echo json_encode(['success' => false, 'message' => "Invalid email address for contact: $title"]);
+                    exit;
+                }
+                if (!empty($c_phone) && !preg_match('/^[0-9+ \-()]{6,20}$/', $c_phone)) {
+                    echo json_encode(['success' => false, 'message' => "Invalid phone number for contact: $title"]);
+                    exit;
+                }
+                $custom_contacts[] = [
+                    'title' => $title,
+                    'name'  => $c_name,
+                    'email' => $c_email,
+                    'phone' => $c_phone
+                ];
+            }
+        }
+    }
+    $custom_contacts_json = json_encode($custom_contacts);
+
     if (empty($name) || empty($email) || empty($phone) || empty($address)) {
         echo json_encode(['success' => false, 'message' => 'Name, Email, Phone, and Address are required.']);
         exit;
@@ -114,6 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['operation']) && $_POS
         'finance_contact_email' => trim($_POST['finance_contact_email'] ?? ''),
         'finance_contact_phone' => trim($_POST['finance_contact_phone'] ?? ''),
         'lead_value'            => empty($lead_value) ? 0.00 : $lead_value,
+        'custom_contacts'       => $custom_contacts_json,
         'updated_at'            => date('Y-m-d H:i:s'),
     ];
 
@@ -150,6 +180,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['operation']) && $_POS
     $finance_contact_email = trim($_POST['finance_contact_email'] ?? '');
     $finance_contact_phone = trim($_POST['finance_contact_phone'] ?? '');
     $lead_value            = trim($_POST['lead_value'] ?? '0.00');
+
+    // === Custom Contacts ===
+    $custom_contacts = [];
+    if (isset($_POST['custom_contact_titles']) && is_array($_POST['custom_contact_titles'])) {
+        foreach ($_POST['custom_contact_titles'] as $index => $title) {
+            $title = trim($title);
+            $c_name = trim($_POST['custom_contact_names'][$index] ?? '');
+            $c_email = trim($_POST['custom_contact_emails'][$index] ?? '');
+            $c_phone = trim($_POST['custom_contact_phones'][$index] ?? '');
+
+            if (!empty($title) && !empty($c_name)) {
+                if (!empty($c_email) && !filter_var($c_email, FILTER_VALIDATE_EMAIL)) {
+                    echo json_encode(['success' => false, 'message' => "Invalid email address for contact: $title"]);
+                    exit;
+                }
+                if (!empty($c_phone) && !preg_match('/^[0-9+ \-()]{6,20}$/', $c_phone)) {
+                    echo json_encode(['success' => false, 'message' => "Invalid phone number for contact: $title"]);
+                    exit;
+                }
+                $custom_contacts[] = [
+                    'title' => $title,
+                    'name'  => $c_name,
+                    'email' => $c_email,
+                    'phone' => $c_phone
+                ];
+            }
+        }
+    }
+    $custom_contacts_json = json_encode($custom_contacts);
 
     // Basic required fields validation
     if (empty($name) || empty($client_name) || empty($email) || empty($country_code) || empty($phone) || empty($address)) {
@@ -222,6 +281,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['operation']) && $_POS
         'finance_contact_email' => trim($_POST['finance_contact_email'] ?? ''),
         'finance_contact_phone' => trim($_POST['finance_contact_phone'] ?? ''),
         'lead_value'            => empty($lead_value) ? 0.00 : $lead_value,
+        'custom_contacts'       => $custom_contacts_json,
     ];
 
     if ($db->insert('companies', $data)) {

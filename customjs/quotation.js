@@ -80,8 +80,8 @@ $(document).ready(function () {
     calculateRowTotal($row);
   });
 
-  // When unit or sale price changes
-  $(document).on("input change", ".unit-select, .sale-price", function () {
+  // When unit, sale price, or reg price changes
+  $(document).on("input change", ".unit-select, .sale-price, .reg-price", function () {
     var $row = $(this).closest("tr");
     calculateRowTotal($row);
   });
@@ -280,6 +280,47 @@ $(document).ready(function () {
       },
     });
   }
+
+  // Add custom row inside product tables
+  var customRowCounter = 0;
+  $(document).on("click", ".add-custom-row-btn", function () {
+      var productId = $(this).data("product-id");
+      customRowCounter++;
+      var uniqueKey = "custom_" + customRowCounter + "_" + Date.now();
+      
+      var rowHtml = `
+      <tr class="custom-row-item">
+          <td>
+              <input type="text" class="form-control" name="products[${productId}][${uniqueKey}][custom_details]" placeholder="Enter Custom Attribute (e.g. Firewall)" required>
+              <input type="hidden" name="products[${productId}][${uniqueKey}][attribute_id]" value="1">
+          </td>
+          <td>
+              <input type="number" step="0.01" class="form-control reg-price" name="products[${productId}][${uniqueKey}][reg_price]" value="0">
+          </td>
+          <td>
+              <input type="number" class="form-control unit-select" name="products[${productId}][${uniqueKey}][unit]" value="1">
+          </td>
+          <td>
+              <input type="number" step="0.01" class="form-control sale-price" name="products[${productId}][${uniqueKey}][sale_price]" value="0">
+          </td>
+          <td>
+              <input type="number" step="0.01" class="form-control total-price" name="products[${productId}][${uniqueKey}][total]" value="0" readonly>
+          </td>
+          <td>
+              <button type="button" class="btn btn-danger btn-xs remove-custom-row-btn" title="Remove Row">
+                  <i class="fas fa-trash"></i>
+              </button>
+          </td>
+      </tr>`;
+      
+      $(this).closest("table").find("tbody").append(rowHtml);
+  });
+
+  $(document).on("click", ".remove-custom-row-btn", function () {
+      var $row = $(this).closest("tr");
+      $row.remove();
+      calculateTotalPrice();
+  });
 });
 
 $(document).ready(function () {

@@ -73,7 +73,8 @@
                                     data-cin="<?php echo htmlspecialchars($company['cin_no']); ?>"
                                     data-website="<?php echo htmlspecialchars($company['website']); ?>"
                                     data-created="<?php echo $company['created_at']; ?>"
-                                    data-updated="<?php echo $company['updated_at']; ?>">
+                                    data-updated="<?php echo $company['updated_at']; ?>"
+                                    data-custom-contacts="<?php echo htmlspecialchars($company['custom_contacts'] ?? '[]'); ?>">
                                     View
                                 </button>
                                 <!-- <a href="<?php echo BASE_URL ?>admin/companies/delete.php?id=<?php echo $company['id']; ?>"
@@ -122,6 +123,10 @@
           <tr>
             <th>Created At</th><td id="c_created"></td>
             <th>Updated At</th><td id="c_updated"></td>
+          </tr>
+          <tr id="custom_contacts_row" style="display:none;">
+            <th>Custom Contacts</th>
+            <td colspan="3" id="c_custom_contacts"></td>
           </tr>
         </table>
       </div>

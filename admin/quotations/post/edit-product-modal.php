@@ -37,11 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['operation']) && $_GET['
         $attributesQuery  = "SELECT * FROM attributes WHERE attribute_type = $typeId AND status = 'active'";
         $attributesResult = $db->get_results($attributesQuery);
 
-        // Fetch existing quote_details row (if any) for this product, type and quotation
         $quoteQuery = "SELECT * FROM quote_details 
                        WHERE product_id = $productId 
                          AND quotation_id = $quotationId 
                          AND attribute_type = $typeId
+                         AND (custom_details IS NULL OR custom_details = '')
                        LIMIT 1";
         $quoteRow = $db->get_row($quoteQuery);
 
@@ -94,10 +94,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['operation']) && $_GET['
         $tableHtml .= '</tr>';
     }
 
+    // Fetch existing custom rows for this product and quotation
+    $customQuery = "SELECT * FROM quote_details 
+                    WHERE product_id = $productId 
+                      AND quotation_id = $quotationId 
+                      AND custom_details IS NOT NULL 
+                      AND custom_details != ''";
+    $customRows = $db->get_results($customQuery) ?: [];
+
+    foreach ($customRows as $row) {
+        $rowId = $row['id'];
+        $uniqueKey = "existing_" . $rowId;
+        $desc = $row['custom_details'];
+
+        $tableHtml .= '<tr class="custom-row-item">';
+        $tableHtml .= '<td>
+            <input type="text" class="form-control" name="products[' . $productId . '][' . $uniqueKey . '][custom_details]" value="' . htmlspecialchars($desc, ENT_QUOTES) . '" required>
+            <input type="hidden" name="products[' . $productId . '][' . $uniqueKey . '][attribute_id]" value="1">
+            <input type="hidden" name="products[' . $productId . '][' . $uniqueKey . '][quote_detail_id]" value="' . $rowId . '">
+        </td>';
+        $tableHtml .= '<td><input type="number" step="0.01" class="form-control reg-price" name="products[' . $productId . '][' . $uniqueKey . '][reg_price]" value="' . $row['reg_price'] . '"></td>';
+        $tableHtml .= '<td>
+            <input type="number" class="form-control unit-select" name="products[' . $productId . '][' . $uniqueKey . '][unit]" value="' . $row['unit'] . '">
+        </td>';
+        $tableHtml .= '<td><input type="number" step="0.01" class="form-control sale-price" name="products[' . $productId . '][' . $uniqueKey . '][sale_price]" value="' . $row['sale_price'] . '"></td>';
+        $tableHtml .= '<td><input type="number" step="0.01" class="form-control total-price" name="products[' . $productId . '][' . $uniqueKey . '][total]" value="' . $row['total_price'] . '" readonly></td>';
+        $tableHtml .= '<td><button class="btn btn-xs btn-danger remove-custom-row-btn" type="button"><i class="fas fa-trash"></i></button></td>';
+        $tableHtml .= '</tr>';
+    }
+
     $tableHtml .= '
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" class="text-right p-2">
+                    <button type="button" class="btn btn-success btn-xs add-custom-row-btn" data-product-id="' . $productId . '">
+                        <i class="fas fa-plus"></i> Add Custom Row
+                    </button>
+                </td>
+            </tr>
+        </tfoot>
     </table>
-     <button type="button" id="saveProductBtn" class="btn btn-success">Save</button>
+      <button type="button" id="saveProductBtn" class="btn btn-success">Save</button>
 </form>
     ';
 
@@ -112,37 +150,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products'], $_POST['q
     $products    = $_POST['products'];
 
     foreach ($products as $productId => $types) {
+        // Get all pre-existing custom rows for this product/quotation to check for deletions
+        $existingCustomQuery = "SELECT id FROM quote_details 
+                                WHERE quotation_id = $quotationId 
+                                  AND product_id = $productId 
+                                  AND custom_details IS NOT NULL 
+                                  AND custom_details != ''";
+        $dbExistingRows = $db->get_results($existingCustomQuery) ?: [];
+        $dbExistingIds = array_column($dbExistingRows, 'id');
+        
+        $submittedExistingIds = [];
+
         foreach ($types as $typeId => $data) {
-            $attributeId = intval($data['attribute_id']);
+            $isCustomRow = (strpos($typeId, 'custom_') === 0 || strpos($typeId, 'existing_') === 0);
+            
+            $attributeId = 1;
+            if (!$isCustomRow) {
+                $attributeId = intval($data['attribute_id']);
+            }
+
             $regPrice    = floatval($data['reg_price']);
             $unit        = intval($data['unit']);
             $salePrice   = floatval($data['sale_price']);
             $totalPrice  = floatval($data['total']);
+            $customDetails = $isCustomRow ? ($data['custom_details'] ?? '') : NULL;
 
-            // Check if record exists
-            $checkQuery = "SELECT id FROM quote_details 
-                           WHERE quotation_id = $quotationId 
-                             AND product_id = $productId 
-                             AND attribute_type = $typeId 
-                           LIMIT 1";
-            $existing = $db->get_row($checkQuery);
+            if (strpos($typeId, 'existing_') === 0) {
+                // Pre-existing custom row. We extract the ID.
+                $quoteDetailId = intval(str_replace('existing_', '', $typeId));
+                $submittedExistingIds[] = $quoteDetailId;
 
-            if ($existing) {
-                // Update existing row
+                // Update row
                 $updateQuery = "UPDATE quote_details 
-                                SET attribute_id = $attributeId,
+                                SET attribute_type = 1,
+                                    attribute_id = 1,
                                     reg_price = $regPrice,
                                     unit = $unit,
                                     sale_price = $salePrice,
-                                    total_price = $totalPrice
-                                WHERE id = {$existing['id']}";
+                                    total_price = $totalPrice,
+                                    custom_details = '" . $db->filter($customDetails) . "'
+                                WHERE id = $quoteDetailId";
                 $db->query($updateQuery);
-            } else {
-                // Insert new row
+            } else if (strpos($typeId, 'custom_') === 0) {
+                // Newly added custom row
                 $insertQuery = "INSERT INTO quote_details 
-                                (quotation_id, product_id, attribute_type, attribute_id, reg_price, unit, sale_price, total_price) 
-                                VALUES ($quotationId, $productId, $typeId, $attributeId, $regPrice, $unit, $salePrice, $totalPrice)";
+                                (quotation_id, product_id, attribute_type, attribute_id, reg_price, unit, sale_price, total_price, custom_details) 
+                                VALUES ($quotationId, $productId, 1, 1, $regPrice, $unit, $salePrice, $totalPrice, '" . $db->filter($customDetails) . "')";
                 $db->query($insertQuery);
+            } else {
+                // Standard row
+                $checkQuery = "SELECT id FROM quote_details 
+                               WHERE quotation_id = $quotationId 
+                                 AND product_id = $productId 
+                                 AND attribute_type = $typeId 
+                                 AND (custom_details IS NULL OR custom_details = '')
+                               LIMIT 1";
+                $existing = $db->get_row($checkQuery);
+
+                if ($existing) {
+                    $updateQuery = "UPDATE quote_details 
+                                    SET attribute_id = $attributeId,
+                                        reg_price = $regPrice,
+                                        unit = $unit,
+                                        sale_price = $salePrice,
+                                        total_price = $totalPrice
+                                    WHERE id = {$existing['id']}";
+                    $db->query($updateQuery);
+                } else {
+                    $insertQuery = "INSERT INTO quote_details 
+                                    (quotation_id, product_id, attribute_type, attribute_id, reg_price, unit, sale_price, total_price) 
+                                    VALUES ($quotationId, $productId, $typeId, $attributeId, $regPrice, $unit, $salePrice, $totalPrice)";
+                    $db->query($insertQuery);
+                }
+            }
+        }
+
+        // Delete any pre-existing custom rows that were removed in the modal
+        foreach ($dbExistingIds as $dbId) {
+            if (!in_array($dbId, $submittedExistingIds)) {
+                $db->delete('quote_details', ['id' => $dbId]);
             }
         }
     }

@@ -1,0 +1,30 @@
+# Logs and temporary files
+error_log
+*/error_log
+*~
+*.log
+*.tmp
+
+# IDE / Editor configurations
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS-generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# PHP specific
+composer.phar
+/vendor/
+
+# Configuration and database credentials
+/config.php
+/includes/class.db.php
+/includes/error.log

@@ -24,7 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ! empty($_POST['products'])) {
         $productName = $db->get_var("SELECT name FROM products WHERE id = $productId");
 
         foreach ($attributes as $attributeTypeId => $fields) {
-            $isCustomProduct = in_array($productId, [3, 4, 5]);
+            $isCustomRow = (strpos($attributeTypeId, 'custom_') === 0);
+            $isCustomProduct = in_array($productId, [3, 4, 5]) || $isCustomRow;
             $attributeName = $isCustomProduct ? "Custom Details" : $db->get_var("SELECT name FROM attribute_types WHERE id = $attributeTypeId");
             $rowId         = "Product $productName, Attribute Type $attributeName";
 
@@ -71,9 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ! empty($_POST['products'])) {
         'server_type'      => $_POST['server_type'],
         'otc'              => (is_numeric($_POST['otc'] ?? '') ? (float)$_POST['otc'] : 0.00),
         'sub_total'        => (is_numeric($_POST['sub_total'] ?? '') ? (float)$_POST['sub_total'] : 0.00),
-        'quotation_status' => $_POST['quotation_status'] ?? 'demo',
-        'demo_start_date'  => (!empty($_POST['demo_start_date']) ? $_POST['demo_start_date'] : NULL),
-        'demo_end_date'    => (!empty($_POST['demo_end_date']) ? $_POST['demo_end_date'] : NULL),
+        'quotation_status' => 'open',
+        'demo_start_date'  => NULL,
+        'demo_end_date'    => NULL,
     ];
 
     if (! $db->insert('quotations', $quotationData)) {
@@ -86,11 +87,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ! empty($_POST['products'])) {
     // If validation passed, proceed with insert
     foreach ($products as $productId => $attributes) {
         foreach ($attributes as $attributeTypeId => $fields) {
+            $isCustomRow = (strpos($attributeTypeId, 'custom_') === 0);
+            $isCustomProduct = in_array($productId, [3, 4, 5]) || $isCustomRow;
+
             $insertData = [
                 'product_id'     => (int) $productId,
                 'quotation_id'   => (int) $quotation_id,
-                'attribute_type' => (int) $attributeTypeId,
-                'attribute_id'   => (int) ($fields['attribute_id'] ?? 1),
+                'attribute_type' => $isCustomProduct ? 1 : (int) $attributeTypeId,
+                'attribute_id'   => $isCustomProduct ? 1 : (int) ($fields['attribute_id'] ?? 1),
                 'reg_price'      => number_format((float) $fields['reg_price'], 2, '.', ''),
                 'unit'           => (int) $fields['unit'],
                 'sale_price'     => number_format((float) $fields['sale_price'], 2, '.', ''),
@@ -109,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ! empty($_POST['products'])) {
 
     if ($insertedCount > 0 && empty($errors)) {
         // Trigger email notification
-        $quoteStatus = $_POST['quotation_status'] ?? 'demo';
+        $quoteStatus = 'open';
         $companyDetails = getCompanyDetailsFromQuotationId($quotation_id);
         $user = getUserDetailsFromUserId($_SESSION['user']['id']);
         

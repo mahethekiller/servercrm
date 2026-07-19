@@ -187,6 +187,19 @@
                                 <input type="tel" class="form-control" id="finance_contact_phone" name="finance_contact_phone" placeholder="Finance Contact Phone">
                             </div>
                         </div>
+
+                        <!-- Custom Contacts Section -->
+                        <div class="col-12 mt-4 border-top pt-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">Custom Contact Details</h5>
+                                <button type="button" class="btn btn-success btn-sm" id="add-more-contact-btn">
+                                    <i class="bi bi-plus-lg"></i> Add More
+                                </button>
+                            </div>
+                            <div id="custom-contacts-wrapper">
+                                <!-- Dynamic contacts will be appended here via JS -->
+                            </div>
+                        </div>
                     </div>
                     <input type="hidden" name="operation" value="add">
                     <button type="submit" class="btn btn-primary">Submit</button>
